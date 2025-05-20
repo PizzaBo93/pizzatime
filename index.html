@@ -248,46 +248,61 @@
     return message;
   }
 
-    document.getElementById('place-order').addEventListener('click', () => {
-      const name = document.getElementById('customer-name').value.trim();
-      const phone = document.getElementById('customer-phone').value.trim();
-      const address = document.getElementById('customer-address').value.trim();
-      const note = document.getElementById('customer-note').value.trim();
+  document.getElementById('place-order').addEventListener('click', () => {
+    const name = document.getElementById('customer-name').value.trim();
+    const phone = document.getElementById('customer-phone').value.trim();
+    const address = document.getElementById('customer-address').value.trim();
+    const note = document.getElementById('customer-note').value.trim();
 
-      if (!name || !phone || !address) {
-        alert("Vui lòng nhập đầy đủ thông tin khách hàng!");
-        return;
-      }
-      if (cart.length === 0) {
-        alert("Vui lòng thêm sản phẩm vào giỏ hàng!");
-        return;
-      }
+    if (!name || !phone || !address) {
+      alert("Vui lòng nhập đầy đủ thông tin khách hàng!");
+      return;
+    }
 
-      const detailDiv = document.getElementById('order-detail');
-      detailDiv.innerHTML = '';
-      cart.forEach(item => {
-        const p = document.createElement('p');
-        p.textContent = `- ${item.name} x ${item.quantity}`;
-        detailDiv.appendChild(p);
-      });
-      detailDiv.innerHTML += `
-        <hr class="my-2"/>
-        <p><strong>Khách hàng:</strong> ${name}</p>
-        <p><strong>Điện thoại:</strong> ${phone}</p>
-        <p><strong>Địa chỉ:</strong> ${address}</p>
-        ${note ? `<p><strong>Ghi chú:</strong> ${note}</p>` : ''}
-    
-      `;
+    if (cart.length === 0) {
+      alert("Vui lòng thêm sản phẩm vào giỏ hàng!");
+      return;
+    }
 
-      document.getElementById('order-summary').classList.remove('hidden');
-
-      alert("Cảm ơn bạn đã đặt hàng!");
-      cart = [];
-      renderCart();
+    // Soạn nội dung tin nhắn
+    let message = `🛒 ĐƠN HÀNG MỚI\n👤 Khách: ${name}\n📞 SĐT: ${phone}\n🏠 Địa chỉ: ${address}\n📝 Ghi chú: ${note || "Không có"}\n\n📦 Món đặt:\n`;
+    let total = 0;
+    cart.forEach(item => {
+      message += `🍕 ${item.name} x${item.quantity} = ${item.price * item.quantity}k\n`;
+      total += item.price * item.quantity;
     });
+    message += `\n💰 Tổng cộng: ${total}k`;
 
-    renderMenu();
+    // Gửi về Telegram
+    sendTelegramMessage(message);
+
+    // Hiện thông tin đơn hàng trên web
+    const detailDiv = document.getElementById('order-detail');
+    detailDiv.innerHTML = '';
+    cart.forEach(item => {
+      const p = document.createElement('p');
+      p.textContent = `- ${item.name} x ${item.quantity}`;
+      detailDiv.appendChild(p);
+    });
+    detailDiv.innerHTML += `
+      <hr class="my-2"/>
+      <p><strong>Khách hàng:</strong> ${name}</p>
+      <p><strong>Điện thoại:</strong> ${phone}</p>
+      <p><strong>Địa chỉ:</strong> ${address}</p>
+      ${note ? `<p><strong>Ghi chú:</strong> ${note}</p>` : ''}
+    `;
+
+    document.getElementById('order-summary').classList.remove('hidden');
+    alert("Cảm ơn bạn đã đặt hàng!");
+
+    // Reset cart
+    cart = [];
     renderCart();
-  </script>
+  });
+
+  renderMenu();
+  renderCart();
+</script>
+
 </body>
 </html>
