@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pizza Delicious</title>
+  <title>Pizza Time</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800">
-  <header class="bg-green-600 text-white p-4 text-center shadow">
-    <h1 class="text-2xl font-bold">Pizza Delicious</h1>
-  </header>
+<header class="bg-green-600 text-white p-4 text-center shadow flex items-center justify-center space-x-3">
+  <img src="logo.jpg" alt="Pizza Logo" class="h-10 w-10 rounded-full">
+  <h1 class="text-2xl font-bold">Pizza Time</h1>
+</header>T
 
   <div class="max-w-4xl mx-auto">
-    <div id="category-tabs" class="flex border-b text-lg font-medium">
-      <button class="tab flex-1 py-3 text-center border-b-2 border-green-600 text-green-600" data-category="Pizza S">Pizza Size S</button>
-      <button class="tab flex-1 py-3 text-center" data-category="Pizza L">Pizza Size L</button>
-      <button class="tab flex-1 py-3 text-center" data-category="Món ăn nhẹ">Món ăn nhẹ</button>
-      <button class="tab flex-1 py-3 text-center" data-category="Nước">Nước</button>
+    <div id="category-tabs" class="flex flex-wrap justify-between gap-2 p-2 border-b text-sm sm:text-base font-medium">
+        <button class="tab flex-1 min-w-[45%] py-2 px-3 text-center border rounded-md bg-white hover:bg-green-50" data-category="Pizza S">Pizza Size S</button>
+        <button class="tab flex-1 min-w-[45%] py-2 px-3 text-center border rounded-md bg-white hover:bg-green-50" data-category="Pizza L">Pizza Size L</button>
+        <button class="tab flex-1 min-w-[45%] py-2 px-3 text-center border rounded-md bg-white hover:bg-green-50" data-category="Món ăn nhẹ">Món ăn nhẹ</button>
+        <button class="tab flex-1 min-w-[45%] py-2 px-3 text-center border rounded-md bg-white hover:bg-green-50" data-category="Nước">Nước</button>
     </div>
 
     <div id="menu-container" class="p-4 grid grid-cols-2 gap-4"></div>
