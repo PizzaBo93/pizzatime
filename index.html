@@ -1,632 +1,240 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizza Time - Đặt hàng trực tuyến</title>
-    <style>
-        :root {
-            --primary: #ff4500;
-            --secondary: #ffcc00;
-            --dark: #333;
-            --light: #f9f9f9;
-            --success: #28a745;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--light);
-            color: var(--dark);
-        }
-        
-        header {
-            background-color: var(--primary);
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-        
-        .menu-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        .pizza-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        
-        .pizza-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .pizza-img {
-            height: 200px;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        
-        .pizza-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .pizza-info {
-            padding: 1.5rem;
-        }
-        
-        .pizza-name {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-        }
-        
-        .pizza-desc {
-            color: #666;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        
-        .pizza-price {
-            font-weight: bold;
-            color: var(--primary);
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-        
-        .add-to-cart {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
-            width: 100%;
-        }
-        
-        .add-to-cart:hover {
-            background-color: #e03d00;
-        }
-        
-        .cart-section {
-            background-color: white;
-            border-radius: 8px;
-            padding: 2rem;
-            margin-top: 2rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .cart-title {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 0.5rem;
-        }
-        
-        .cart-empty {
-            text-align: center;
-            color: #888;
-            padding: 2rem;
-        }
-        
-        .cart-items {
-            margin-bottom: 2rem;
-        }
-        
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .cart-item-details {
-            flex: 1;
-        }
-        
-        .cart-item-name {
-            font-weight: bold;
-        }
-        
-        .cart-item-price {
-            color: var(--primary);
-        }
-        
-        .cart-item-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .quantity-control {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .qty-btn {
-            background-color: #eee;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .qty-value {
-            width: 30px;
-            text-align: center;
-            font-weight: bold;
-        }
-        
-        .remove-item {
-            color: #dc3545;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
-            margin-left: 1rem;
-        }
-        
-        .cart-summary {
-            margin-top: 2rem;
-            border-top: 2px dashed #eee;
-            padding-top: 1rem;
-        }
-        
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-        
-        .summary-total {
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 2px solid #eee;
-        }
-        
-        .checkout-section {
-            margin-top: 2rem;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-        
-        input, textarea, select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        .checkout-btn {
-            background-color: var(--success);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 1rem;
-            transition: background-color 0.3s;
-        }
-        
-        .checkout-btn:hover {
-            background-color: #218838;
-        }
-        
-        .order-confirmation {
-            display: none;
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-            padding: 2rem;
-            text-align: center;
-            border-radius: 8px;
-            margin-top: 2rem;
-        }
-        
-        .order-number {
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin: 1rem 0;
-        }
-        
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            color: var(--primary);
-        }
-        
-        footer {
-            background-color: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
-        
-        @media (max-width: 768px) {
-            .menu-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .cart-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            
-            .cart-item-actions {
-                width: 100%;
-                justify-content: space-between;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pizza Delicious</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <header>
-        <h1>🍕 Pizza Express</h1>
-        <p>Đặt hàng trực tuyến - Giao hàng tận nơi</p>
-    </header>
-    
-    <div class="container">
-        <h2 class="section-title">Thực đơn của chúng tôi</h2>
-        
-        <div class="menu-container" id="menu-container">
-            <!-- Pizza items will be generated here -->
-        </div>
-        
-        <div class="cart-section">
-            <h2 class="cart-title">Giỏ hàng của bạn</h2>
-            
-            <div id="cart-items" class="cart-items">
-                <div class="cart-empty" id="cart-empty">
-                    Giỏ hàng của bạn đang trống.
-                </div>
-            </div>
-            
-            <div class="cart-summary" id="cart-summary" style="display: none;">
-                <div class="summary-row">
-                    <span>Tạm tính:</span>
-                    <span id="subtotal">0đ</span>
-                </div>
-                <div class="summary-row">
-                    <span>Phí giao hàng:</span>
-                    <span id="delivery-fee">25,000đ</span>
-                </div>
-                <div class="summary-row summary-total">
-                    <span>Tổng cộng:</span>
-                    <span id="total">0đ</span>
-                </div>
-            </div>
-            
-            <div class="checkout-section" id="checkout-section" style="display: none;">
-                <h3 style="margin-bottom: 1.5rem;">Thông tin đặt hàng</h3>
-                
-                <form id="checkout-form">
-                    <div class="form-group">
-                        <label for="name">Họ và tên</label>
-                        <input type="text" id="name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">Số điện thoại</label>
-                        <input type="tel" id="phone" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="address">Địa chỉ giao hàng</label>
-                        <textarea id="address" required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="payment">Phương thức thanh toán</label>
-                        <select id="payment" required>
-                            <option value="cash">Tiền mặt khi nhận hàng</option>
-                            <option value="card">Thẻ tín dụng/Ghi nợ</option>
-                            <option value="banking">Chuyển khoản ngân hàng</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="notes">Ghi chú thêm</label>
-                        <textarea id="notes"></textarea>
-                    </div>
-                    
-                    <button type="submit" class="checkout-btn">Đặt hàng ngay</button>
-                </form>
-            </div>
-        </div>
-        
-        <div class="order-confirmation" id="order-confirmation">
-            <h2>Đặt hàng thành công!</h2>
-            <p>Cảm ơn bạn đã đặt hàng tại Pizza Express.</p>
-            <p class="order-number">Mã đơn hàng: <span id="order-number"></span></p>
-            <p>Chúng tôi sẽ giao hàng trong vòng 30-45 phút.</p>
-        </div>
+<body class="bg-gray-50 text-gray-800">
+  <header class="bg-green-600 text-white p-4 text-center shadow">
+    <h1 class="text-2xl font-bold">Pizza Delicious</h1>
+  </header>
+
+  <div class="max-w-4xl mx-auto">
+    <div id="category-tabs" class="flex border-b text-lg font-medium">
+      <button class="tab flex-1 py-3 text-center border-b-2 border-green-600 text-green-600" data-category="Pizza S">Pizza Size S</button>
+      <button class="tab flex-1 py-3 text-center" data-category="Pizza L">Pizza Size L</button>
+      <button class="tab flex-1 py-3 text-center" data-category="Món ăn nhẹ">Món ăn nhẹ</button>
+      <button class="tab flex-1 py-3 text-center" data-category="Nước">Nước</button>
     </div>
-    
-    <footer>
-        <p>&copy; 2025 Pizza Time. Tất cả các quyền được bảo lưu.</p>
-        <p>Địa chỉ: 227 Bà Triệu, Phường 7, TP. Tuy Hòa</p>
-        <p>Hotline: 1900-1234</p>
-    </footer>
-    
-    <script>
-        // Pizza data
-        const pizzaMenu = [
-            {
-                id: 1,
-                name: "Pizza Hải Sản Đặc Biệt",
-                description: "Tôm, mực, cua, sốt cà chua đặc biệt và phô mai Mozzarella.",
-                price: 169000,
-                image: "/api/placeholder/400/320"
-            },
-            {
-                id: 2,
-                name: "Pizza Gà BBQ",
-                description: "Gà nướng BBQ, hành tây, sốt BBQ đặc biệt và phô mai Mozzarella.",
-                price: 149000,
-                image: "/api/placeholder/400/320"
-            },
-            {
-                id: 3,
-                name: "Pizza Rau Củ",
-                description: "Ớt chuông, nấm, hành tây, ô liu, cà chua và phô mai Mozzarella.",
-                price: 129000,
-                image: "/api/placeholder/400/320"
-            },
-            {
-                id: 4,
-                name: "Pizza Thịt Nguội & Nấm",
-                description: "Thịt nguội, nấm, sốt cà chua và phô mai Mozzarella.",
-                price: 149000,
-                image: "/api/placeholder/400/320"
-            },
-            {
-                id: 5,
-                name: "Pizza Bò & Tương Ớt",
-                description: "Bò xay, ớt chuông, hành tây, sốt tương ớt và phô mai Mozzarella.",
-                price: 159000,
-                image: "/api/placeholder/400/320"
-            },
-            {
-                id: 6,
-                name: "Pizza Hawaii",
-                description: "Thịt nguội, dứa, sốt cà chua và phô mai Mozzarella.",
-                price: 139000,
-                image: "/api/placeholder/400/320"
-            }
-        ];
-        
-        // Cart array
-        let cart = [];
-        
-        // Format currency
-        function formatCurrency(amount) {
-            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "đ";
-        }
-        
-        // Render pizza menu
-        function renderMenu() {
-            const menuContainer = document.getElementById('menu-container');
-            menuContainer.innerHTML = '';
-            
-            pizzaMenu.forEach(pizza => {
-                const pizzaCard = document.createElement('div');
-                pizzaCard.className = 'pizza-card';
-                pizzaCard.innerHTML = `
-                    <div class="pizza-img">
-                        <img src="${pizza.image}" alt="${pizza.name}">
-                    </div>
-                    <div class="pizza-info">
-                        <h3 class="pizza-name">${pizza.name}</h3>
-                        <p class="pizza-desc">${pizza.description}</p>
-                        <p class="pizza-price">${formatCurrency(pizza.price)}</p>
-                        <button class="add-to-cart" data-id="${pizza.id}">Thêm vào giỏ hàng</button>
-                    </div>
-                `;
-                menuContainer.appendChild(pizzaCard);
-            });
-            
-            // Add event listeners to add-to-cart buttons
-            document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', addToCart);
-            });
-        }
-        
-        // Add to cart
-        function addToCart(event) {
-            const pizzaId = parseInt(event.target.getAttribute('data-id'));
-            const pizza = pizzaMenu.find(p => p.id === pizzaId);
-            
-            const existingItem = cart.find(item => item.id === pizzaId);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    id: pizza.id,
-                    name: pizza.name,
-                    price: pizza.price,
-                    quantity: 1
-                });
-            }
-            
-            updateCart();
-        }
-        
-        // Update cart
-        function updateCart() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            const cartEmptyMessage = document.getElementById('cart-empty');
-            const cartSummary = document.getElementById('cart-summary');
-            const checkoutSection = document.getElementById('checkout-section');
-            
-            // Clear cart items
-            cartItemsContainer.innerHTML = '';
-            
-            // Check if cart is empty
-            if (cart.length === 0) {
-                cartEmptyMessage.style.display = 'block';
-                cartSummary.style.display = 'none';
-                checkoutSection.style.display = 'none';
-                return;
-            }
-            
-            // Hide empty message and show summary
-            cartEmptyMessage.style.display = 'none';
-            cartSummary.style.display = 'block';
-            checkoutSection.style.display = 'block';
-            
-            // Render cart items
-            cart.forEach(item => {
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.innerHTML = `
-                    <div class="cart-item-details">
-                        <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">${formatCurrency(item.price)} x ${item.quantity}</div>
-                    </div>
-                    <div class="cart-item-actions">
-                        <div class="quantity-control">
-                            <button class="qty-btn decrease" data-id="${item.id}">-</button>
-                            <span class="qty-value">${item.quantity}</span>
-                            <button class="qty-btn increase" data-id="${item.id}">+</button>
-                        </div>
-                        <button class="remove-item" data-id="${item.id}">Xóa</button>
-                    </div>
-                `;
-                cartItemsContainer.appendChild(cartItem);
-            });
-            
-            // Add event listeners to quantity buttons
-            document.querySelectorAll('.qty-btn.decrease').forEach(button => {
-                button.addEventListener('click', decreaseQuantity);
-            });
-            
-            document.querySelectorAll('.qty-btn.increase').forEach(button => {
-                button.addEventListener('click', increaseQuantity);
-            });
-            
-            document.querySelectorAll('.remove-item').forEach(button => {
-                button.addEventListener('click', removeItem);
-            });
-            
-            // Update summary
-            updateSummary();
-        }
-        
-        // Decrease quantity
-        function decreaseQuantity(event) {
-            const itemId = parseInt(event.target.getAttribute('data-id'));
-            const item = cart.find(item => item.id === itemId);
-            
-            if (item && item.quantity > 1) {
-                item.quantity -= 1;
-            } else if (item && item.quantity === 1) {
-                cart = cart.filter(item => item.id !== itemId);
-            }
-            
-            updateCart();
-        }
-        
-        // Increase quantity
-        function increaseQuantity(event) {
-            const itemId = parseInt(event.target.getAttribute('data-id'));
-            const item = cart.find(item => item.id === itemId);
-            
-            if (item) {
-                item.quantity += 1;
-            }
-            
-            updateCart();
-        }
-        
-        // Remove item
-        function removeItem(event) {
-            const itemId = parseInt(event.target.getAttribute('data-id'));
-            cart = cart.filter(item => item.id !== itemId);
-            updateCart();
-        }
-        
-        // Update summary
-        function updateSummary() {
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const deliveryFee = subtotal > 0 ? 25000 : 0;
-            const total = subtotal + deliveryFee;
-            
-            document.getElementById('subtotal').textContent = formatCurrency(subtotal);
-            document.getElementById('delivery-fee').textContent = formatCurrency(deliveryFee);
-            document.getElementById('total').textContent = formatCurrency(total);
-        }
-        
-        // Handle checkout form submission
-        document.getElementById('checkout-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            // Generate random order number
-            const orderNumber = 'PZE' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-            document.getElementById('order-number').textContent = orderNumber;
-            
-            // Show order confirmation
-            document.getElementsByClassName('cart-section')[0].style.display = 'none';
-            document.getElementById('order-confirmation').style.display = 'block';
-            
-            // Reset cart
-            cart = [];
+
+    <div id="menu-container" class="p-4 grid grid-cols-2 gap-4"></div>
+
+    <div class="border-t p-4">
+      <h2 class="text-xl font-semibold mb-3">Thông tin khách hàng</h2>
+      <input id="customer-name" type="text" placeholder="Họ tên" class="w-full mb-2 p-2 border rounded"/>
+      <input id="customer-phone" type="text" placeholder="Số điện thoại" class="w-full mb-2 p-2 border rounded"/>
+      <input id="customer-address" type="text" placeholder="Địa chỉ" class="w-full mb-4 p-2 border rounded"/>
+
+      <h2 class="text-xl font-semibold mb-3">Giỏ hàng (<span id="cart-count">0</span> món)</h2>
+      <div id="cart-items" class="space-y-3 max-h-48 overflow-y-auto"></div>
+      <div class="flex justify-between font-semibold text-lg my-4">
+        <span>Tổng tiền:</span>
+        <span class="text-green-600" id="cart-total">0đ</span>
+      </div>
+      <button id="place-order" class="w-full py-3 bg-green-600 text-white rounded-md font-semibold hover:bg-green-700 transition">Đặt hàng</button>
+    </div>
+
+    <div id="order-summary" class="hidden bg-white border rounded p-4 mt-4 shadow">
+      <h2 class="text-xl font-bold text-green-600 mb-2">Cảm ơn bạn đã đặt hàng!</h2>
+      <p class="mb-2">Thông tin đơn hàng:</p>
+      <div id="order-detail" class="text-sm text-gray-700 space-y-1"></div>
+    </div>
+  </div>
+
+  <script>
+      const pizzaMenu = [
+       // --- Pizza ---
+  // --- Pizza Size S ---
+  { id: 1, name: "Bò (Size S)", price: 45000, category: "Pizza S" },
+  { id: 2, name: "Phô mai (Size S)", price: 45000, category: "Pizza S" },
+  { id: 3, name: "Gà teriyaki (Size S)", price: 45000, category: "Pizza S" },
+  { id: 4, name: "Xúc xích heo (Size S)", price: 45000, category: "Pizza S" },
+  { id: 5, name: "Cá ngừ (Size S)", price: 45000, category: "Pizza S" },
+  { id: 6, name: "Ba rọi xông khói (Size S)", price: 45000, category: "Pizza S" },
+
+  // --- Pizza Size L ---
+  { id: 7, name: "Bò (Size L)", price: 99000, category: "Pizza L" },
+  { id: 8, name: "Phô mai (Size L)", price: 89000, category: "Pizza L" },
+  { id: 9, name: "Gà teriyaki (Size L)", price: 89000, category: "Pizza L" },
+  { id: 10, name: "Hải sản (Size L)", price: 99000, category: "Pizza L" },
+  { id: 11, name: "Xúc xích heo (Size L)", price: 89000, category: "Pizza L" },
+  { id: 12, name: "Pizza nấm rau củ (Size L)", price: 89000, category: "Pizza L" },
+  { id: 13, name: "Xúc xích Đức (Size L)", price: 99000, category: "Pizza L" },
+  { id: 14, name: "Cá ngừ (Size L)", price: 89000, category: "Pizza L" },
+  { id: 15, name: "Ba rọi xông khói (Size L)", price: 89000, category: "Pizza L" },
+  { id: 16, name: "Salami", price: 109000, category: "Pizza L" },
+  { id: 17, name: "Phô mai tươi", price: 99000, category: "Pizza L" },
+  { id: 18, name: "Meat Lover's", price: 119000, category: "Pizza L" },
+  { id: 19, name: "Tôm thanh cua", price: 99000, category: "Pizza L" },
+  { id: 20, name: "Khô Gà - Lạp Xưởng", price: 99000, category: "Pizza L" },
+  { id: 21, name: "Thập Cẩm", price: 119000, category: "Pizza L" },
+  { id: 22, name: "Bò sốt cay", price: 119000, category: "Pizza L" },
+  { id: 23, name: "Hải sản đặc biệt", price: 109000, category: "Pizza L" },
+
+  // --- Món ăn nhẹ ---
+  { id: 24, name: "Gà Sốt Cay", price: 29000, category: "Món ăn nhẹ" },
+  { id: 25, name: "Khoai tây chiên (nhỏ)", price: 20000, category: "Món ăn nhẹ" },
+  { id: 26, name: "Khoai tây chiên (lớn)", price: 35000, category: "Món ăn nhẹ" },
+  { id: 27, name: "Tok Lắc Phô Mai", price: 20000, category: "Món ăn nhẹ" },
+  { id: 28, name: "Bánh Mì Bơ Tỏi", price: 19000, category: "Món ăn nhẹ" },
+  { id: 29, name: "Gà lắc phô mai cay (nhỏ)", price: 25000, category: "Món ăn nhẹ" },
+  { id: 30, name: "Gà lắc phô mai cay (lớn)", price: 45000, category: "Món ăn nhẹ" },
+  { id: 31, name: "Gà rán chiên giòn (nhỏ)", price: 25000, category: "Món ăn nhẹ" },
+  { id: 32, name: "Gà rán chiên giòn (lớn)", price: 30000, category: "Món ăn nhẹ" },
+  { id: 33, name: "Mì Ý đút lò", price: 59000, category: "Món ăn nhẹ" },
+  { id: 34, name: "Mì Ý sốt bò bằm", price: 39000, category: "Món ăn nhẹ" },
+  { id: 35, name: "Salad Cá Ngừ", price: 39000, category: "Món ăn nhẹ" },
+  { id: 36, name: "Salad dầu giấm", price: 35000, category: "Món ăn nhẹ" },
+  { id: 37, name: "Bánh mì phô mai", price: 35000, category: "Món ăn nhẹ" },
+  { id: 38, name: "Bắp Phô Mai", price: 39000, category: "Món ăn nhẹ" },
+
+  // --- Nước uống ---
+  { id: 39, name: "Nước ngọt (ly)", price: 9000, category: "Nước" },
+  { id: 40, name: "Nước ngọt (lon)", price: 15000, category: "Nước" },
+  { id: 41, name: "Nước suối", price: 9000, category: "Nước" },
+  { id: 42, name: "Local Beer", price: 15000, category: "Nước" },
+  { id: 43, name: "Đá me hạt mềm", price: 15000, category: "Nước" },
+  { id: 44, name: "Trà Chanh", price: 15000, category: "Nước" },
+  { id: 45, name: "Trà Đào", price: 20000, category: "Nước" },
+  { id: 46, name: "Trà sữa Thái", price: 20000, category: "Nước" }
+];
+
+
+    let cart = [];
+    let currentCategory = 'Pizza S';
+
+    function formatPrice(price) {
+      return price.toLocaleString('vi-VN') + 'đ';
+    }
+
+    function renderMenu() {
+      const container = document.getElementById('menu-container');
+      container.innerHTML = '';
+      const items = pizzaMenu.filter(p => p.category === currentCategory);
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = "border rounded shadow-sm bg-white hover:shadow-md";
+        div.innerHTML = `
+          <div class="p-3">
+            <h3 class="font-semibold text-lg">${item.name}</h3>
+            <p class="text-green-600 font-medium">${formatPrice(item.price)}</p>
+            <button data-id="${item.id}" class="add-to-cart mt-2 w-full py-2 bg-green-600 text-white rounded hover:bg-green-700">Thêm vào giỏ</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+
+      document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = parseInt(btn.dataset.id);
+          const product = pizzaMenu.find(p => p.id === id);
+          const existing = cart.find(i => i.id === id);
+          if (existing) existing.quantity += 1;
+          else cart.push({ ...product, quantity: 1 });
+          renderCart();
         });
-        
-        // Initialize
+      });
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cart-items');
+      const count = document.getElementById('cart-count');
+      const total = document.getElementById('cart-total');
+      container.innerHTML = '';
+
+      let totalCount = 0;
+      let totalPrice = 0;
+
+      cart.forEach(item => {
+        totalCount += item.quantity;
+        totalPrice += item.quantity * item.price;
+        const div = document.createElement('div');
+        div.className = "flex justify-between items-center border-b pb-2";
+        div.innerHTML = `
+          <div>
+            <h4 class="font-medium">${item.name}</h4>
+            <p class="text-sm text-gray-600">${formatPrice(item.price)} x ${item.quantity}</p>
+          </div>
+          <div class="flex space-x-2">
+            <button class="decrease w-7 h-7 rounded-full border" data-id="${item.id}">-</button>
+            <span>${item.quantity}</span>
+            <button class="increase w-7 h-7 rounded-full border bg-green-600 text-white" data-id="${item.id}">+</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+
+      count.textContent = totalCount;
+      total.textContent = formatPrice(totalPrice);
+
+      document.querySelectorAll('.increase').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = parseInt(btn.dataset.id);
+          const item = cart.find(i => i.id === id);
+          item.quantity += 1;
+          renderCart();
+        });
+      });
+
+      document.querySelectorAll('.decrease').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = parseInt(btn.dataset.id);
+          const item = cart.find(i => i.id === id);
+          if (item.quantity === 1) cart = cart.filter(i => i.id !== id);
+          else item.quantity -= 1;
+          renderCart();
+        });
+      });
+    }
+
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentCategory = btn.dataset.category;
+        document.querySelectorAll('.tab').forEach(b => b.classList.remove('text-green-600', 'border-b-2', 'border-green-600'));
+        btn.classList.add('text-green-600', 'border-b-2', 'border-green-600');
         renderMenu();
-    </script>
+      });
+    });
+
+    document.getElementById('place-order').addEventListener('click', () => {
+      const name = document.getElementById('customer-name').value.trim();
+      const phone = document.getElementById('customer-phone').value.trim();
+      const address = document.getElementById('customer-address').value.trim();
+
+      if (!name || !phone || !address) {
+        alert("Vui lòng nhập đầy đủ thông tin khách hàng!");
+        return;
+      }
+      if (cart.length === 0) {
+        alert("Vui lòng thêm sản phẩm vào giỏ hàng!");
+        return;
+      }
+
+      const detailDiv = document.getElementById('order-detail');
+      detailDiv.innerHTML = '';
+      cart.forEach(item => {
+        const p = document.createElement('p');
+        p.textContent = `- ${item.name} x ${item.quantity}`;
+        detailDiv.appendChild(p);
+      });
+      detailDiv.innerHTML += `
+        <hr class="my-2"/>
+        <p><strong>Khách hàng:</strong> ${name}</p>
+        <p><strong>Điện thoại:</strong> ${phone}</p>
+        <p><strong>Địa chỉ:</strong> ${address}</p>
+      `;
+
+      document.getElementById('order-summary').classList.remove('hidden');
+
+      alert("Cảm ơn bạn đã đặt hàng!");
+      cart = [];
+      renderCart();
+    });
+
+    renderMenu();
+    renderCart();
+  </script>
 </body>
 </html>
