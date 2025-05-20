@@ -201,20 +201,34 @@
     });
 
     function sendTelegramMessage(message) {
-    const botToken = '7998294485:AAFTYXovQjyx0uKFJsgM4zQfJ8LFRxzqsfg'; // Thay bằng token bot của bạn
-    const chatId = '-1002687702091';     // Thay bằng ID nhóm hoặc người nhận
+  const botToken = '7998294485:AAFTYXovQjyx0uKFJsgM4zQfJ8LFRxzqsfg';
+  const chatId = '-1002687702091';
 
-    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message
-      })
-    });
-  }
+  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: message
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("Kết quả từ Telegram:", data);
+    if (data.ok) {
+      alert("Đã gửi đơn hàng đến Telegram!");
+    } else {
+      alert("❌ Gửi không thành công: " + data.description);
+    }
+  })
+  .catch(error => {
+    console.error("Lỗi khi gửi Telegram:", error);
+    alert("Có lỗi khi gửi đơn hàng.");
+  });
+}
+
 
   function formatOrderMessage(cart, name, phone, address, note) {
     let message = "🛒 Đơn hàng mới từ Website\n\n";
