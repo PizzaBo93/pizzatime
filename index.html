@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pizza Time</title>
+  <title>Pizza Time - Tuy Hoa</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800">
 <header class="bg-green-600 text-white p-4 text-center shadow flex items-center justify-center space-x-3">
   <img src="logo.jpg" alt="Pizza Logo" class="h-10 w-10 rounded-full">
-  <h1 class="text-2xl font-bold">Pizza Time</h1>
+  <h1 class="text-2xl font-bold">Pizza Time - Tuy Hoa</h1>
 </header>T
 
   <div class="max-w-4xl mx-auto">
@@ -22,12 +22,13 @@
 
     <div id="menu-container" class="p-4 grid grid-cols-2 gap-4"></div>
 
-    <div class="border-t p-4">
-      <h2 class="text-xl font-semibold mb-3">Thông tin khách hàng</h2>
-      <input id="customer-name" type="text" placeholder="Họ tên" class="w-full mb-2 p-2 border rounded"/>
-      <input id="customer-phone" type="text" placeholder="Số điện thoại" class="w-full mb-2 p-2 border rounded"/>
-      <input id="customer-address" type="text" placeholder="Địa chỉ" class="w-full mb-4 p-2 border rounded"/>
-
+    <div class="border-t p-4 mt-6">
+        <h2 class="text-lg font-semibold mb-2">Thông tin khách hàng</h2>
+        <input id="customer-name" type="text" placeholder="Họ và tên" class="w-full mb-3 px-4 py-2 border rounded" required>
+        <input id="customer-phone" type="tel" placeholder="Số điện thoại" class="w-full mb-3 px-4 py-2 border rounded" required>
+        <input id="customer-address" type="text" placeholder="Địa chỉ giao hàng" class="w-full mb-3 px-4 py-2 border rounded" required>
+        <textarea id="customer-note" placeholder="Ghi chú (không bắt buộc)" class="w-full mb-3 px-4 py-2 border rounded h-24 resize-none"></textarea>
+    </div>
       <h2 class="text-xl font-semibold mb-3">Giỏ hàng (<span id="cart-count">0</span> món)</h2>
       <div id="cart-items" class="space-y-3 max-h-48 overflow-y-auto"></div>
       <div class="flex justify-between font-semibold text-lg my-4">
@@ -199,10 +200,45 @@
       });
     });
 
+    function sendTelegramMessage(message) {
+    const botToken = '7998294485:AAFTYXovQjyx0uKFJsgM4zQfJ8LFRxzqsfg'; // Thay bằng token bot của bạn
+    const chatId = '-1002687702091';     // Thay bằng ID nhóm hoặc người nhận
+
+    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message
+      })
+    });
+  }
+
+  function formatOrderMessage(cart, name, phone, address, note) {
+    let message = "🛒 Đơn hàng mới từ Website\n\n";
+    message += `👤 Tên khách hàng: ${name}\n`;
+    message += `📞 Số điện thoại: ${phone}\n`;
+    message += `📍 Địa chỉ: ${address}\n`;
+
+    if (note && note.trim() !== '') {
+      message += `📝 Ghi chú: ${note.trim()}\n`;
+    }
+
+    message += `\n📦 Món đã đặt:\n`;
+    cart.forEach(item => {
+      message += `• ${item.name} x ${item.quantity}\n`;
+    });
+
+    return message;
+  }
+
     document.getElementById('place-order').addEventListener('click', () => {
       const name = document.getElementById('customer-name').value.trim();
       const phone = document.getElementById('customer-phone').value.trim();
       const address = document.getElementById('customer-address').value.trim();
+      const note = document.getElementById('customer-note').value.trim();
 
       if (!name || !phone || !address) {
         alert("Vui lòng nhập đầy đủ thông tin khách hàng!");
@@ -225,6 +261,8 @@
         <p><strong>Khách hàng:</strong> ${name}</p>
         <p><strong>Điện thoại:</strong> ${phone}</p>
         <p><strong>Địa chỉ:</strong> ${address}</p>
+        ${note ? `<p><strong>Ghi chú:</strong> ${note}</p>` : ''}
+    
       `;
 
       document.getElementById('order-summary').classList.remove('hidden');
