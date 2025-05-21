@@ -48,51 +48,51 @@
   <script>
     
 
-  const pizzaMenu = [
+    const pizzaMenu = [
        // --- Pizza ---
   // --- Pizza Size S ---
-  { id: 1, name: "Bò (Size S)", price: 45000, category: "Pizza S", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 2, name: "Phô mai (Size S)", price: 45000, category: "Pizza S", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 3, name: "Gà teriyaki (Size S)", price: 45000, category: "Pizza S", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Chicken-resize.jpg" },
-  { id: 4, name: "Xúc xích heo (Size S)", price: 45000, category: "Pizza S", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 5, name: "Cá ngừ (Size S)", price: 45000, category: "Pizza S" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 6, name: "Ba rọi xông khói (Size S)", price: 45000, category: "Pizza S", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
+  { id: 1, name: "Bò (Size S)", price: 45000, category: "Pizza S" },
+  { id: 2, name: "Phô mai (Size S)", price: 45000, category: "Pizza S" },
+  { id: 3, name: "Gà teriyaki (Size S)", price: 45000, category: "Pizza S" },
+  { id: 4, name: "Xúc xích heo (Size S)", price: 45000, category: "Pizza S" },
+  { id: 5, name: "Cá ngừ (Size S)", price: 45000, category: "Pizza S" },
+  { id: 6, name: "Ba rọi xông khói (Size S)", price: 45000, category: "Pizza S" },
 
   // --- Pizza Size L ---
-  { id: 7, name: "Bò (Size L)", price: 99000, category: "Pizza L", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 8, name: "Phô mai (Size L)", price: 89000, category: "Pizza L" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 9, name: "Gà teriyaki (Size L)", price: 89000, category: "Pizza L" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 10, name: "Hải sản (Size L)", price: 99000, category: "Pizza L" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 11, name: "Xúc xích heo (Size L)", price: 89000, category: "Pizza L", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 12, name: "Pizza nấm rau củ (Size L)", price: 89000, category: "Pizza L", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 13, name: "Xúc xích Đức (Size L)", price: 99000, category: "Pizza L", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 14, name: "Cá ngừ (Size L)", price: 89000, category: "Pizza L", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 15, name: "Ba rọi xông khói (Size L)", price: 89000, category: "Pizza L" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 16, name: "Salami", price: 109000, category: "Pizza L" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 17, name: "Phô mai tươi", price: 99000, category: "Pizza L" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 18, name: "Meat Lover's", price: 119000, category: "Pizza L" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 19, name: "Tôm thanh cua", price: 99000, category: "Pizza L", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 20, name: "Khô Gà - Lạp Xưởng", price: 99000, category: "Pizza L" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 21, name: "Thập Cẩm", price: 119000, category: "Pizza L" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 22, name: "Bò sốt cay", price: 119000, category: "Pizza L", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 23, name: "Hải sản đặc biệt", price: 109000, category: "Pizza L" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
+  { id: 7, name: "Bò (Size L)", price: 99000, category: "Pizza L" },
+  { id: 8, name: "Phô mai (Size L)", price: 89000, category: "Pizza L" },
+  { id: 9, name: "Gà teriyaki (Size L)", price: 89000, category: "Pizza L" },
+  { id: 10, name: "Hải sản (Size L)", price: 99000, category: "Pizza L" },
+  { id: 11, name: "Xúc xích heo (Size L)", price: 89000, category: "Pizza L" },
+  { id: 12, name: "Pizza nấm rau củ (Size L)", price: 89000, category: "Pizza L" },
+  { id: 13, name: "Xúc xích Đức (Size L)", price: 99000, category: "Pizza L" },
+  { id: 14, name: "Cá ngừ (Size L)", price: 89000, category: "Pizza L" },
+  { id: 15, name: "Ba rọi xông khói (Size L)", price: 89000, category: "Pizza L" },
+  { id: 16, name: "Salami", price: 109000, category: "Pizza L" },
+  { id: 17, name: "Phô mai tươi", price: 99000, category: "Pizza L" },
+  { id: 18, name: "Meat Lover's", price: 119000, category: "Pizza L" },
+  { id: 19, name: "Tôm thanh cua", price: 99000, category: "Pizza L" },
+  { id: 20, name: "Khô Gà - Lạp Xưởng", price: 99000, category: "Pizza L" },
+  { id: 21, name: "Thập Cẩm", price: 119000, category: "Pizza L" },
+  { id: 22, name: "Bò sốt cay", price: 119000, category: "Pizza L" },
+  { id: 23, name: "Hải sản đặc biệt", price: 109000, category: "Pizza L" },
 
   // --- Món ăn nhẹ ---
-  { id: 24, name: "Gà Sốt Cay", price: 29000, category: "Món ăn nhẹ" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 25, name: "Khoai tây chiên (nhỏ)", price: 20000, category: "Món ăn nhẹ", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 26, name: "Khoai tây chiên (lớn)", price: 35000, category: "Món ăn nhẹ" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 27, name: "Tok Lắc Phô Mai", price: 20000, category: "Món ăn nhẹ", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 28, name: "Bánh Mì Bơ Tỏi", price: 19000, category: "Món ăn nhẹ" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 29, name: "Gà lắc phô mai cay (nhỏ)", price: 25000, category: "Món ăn nhẹ", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 30, name: "Gà lắc phô mai cay (lớn)", price: 45000, category: "Món ăn nhẹ", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 31, name: "Gà rán chiên giòn (nhỏ)", price: 25000, category: "Món ăn nhẹ" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 32, name: "Gà rán chiên giòn (lớn)", price: 30000, category: "Món ăn nhẹ" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 33, name: "Mì Ý đút lò", price: 59000, category: "Món ăn nhẹ", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 34, name: "Mì Ý sốt bò bằm", price: 39000, category: "Món ăn nhẹ", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 35, name: "Salad Cá Ngừ", price: 39000, category: "Món ăn nhẹ", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
-  { id: 36, name: "Salad dầu giấm", price: 35000, category: "Món ăn nhẹ" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 37, name: "Bánh mì phô mai", price: 35000, category: "Món ăn nhẹ" , image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg"},
-  { id: 38, name: "Bắp Phô Mai", price: 39000, category: "Món ăn nhẹ", image: "https://raw.githubusercontent.com/PizzaBo93/pizzatime/main/Beef-resize.jpg" },
+  { id: 24, name: "Gà Sốt Cay", price: 29000, category: "Món ăn nhẹ" },
+  { id: 25, name: "Khoai tây chiên (nhỏ)", price: 20000, category: "Món ăn nhẹ" },
+  { id: 26, name: "Khoai tây chiên (lớn)", price: 35000, category: "Món ăn nhẹ" },
+  { id: 27, name: "Tok Lắc Phô Mai", price: 20000, category: "Món ăn nhẹ" },
+  { id: 28, name: "Bánh Mì Bơ Tỏi", price: 19000, category: "Món ăn nhẹ" },
+  { id: 29, name: "Gà lắc phô mai cay (nhỏ)", price: 25000, category: "Món ăn nhẹ" },
+  { id: 30, name: "Gà lắc phô mai cay (lớn)", price: 45000, category: "Món ăn nhẹ" },
+  { id: 31, name: "Gà rán chiên giòn (nhỏ)", price: 25000, category: "Món ăn nhẹ" },
+  { id: 32, name: "Gà rán chiên giòn (lớn)", price: 30000, category: "Món ăn nhẹ" },
+  { id: 33, name: "Mì Ý đút lò", price: 59000, category: "Món ăn nhẹ" },
+  { id: 34, name: "Mì Ý sốt bò bằm", price: 39000, category: "Món ăn nhẹ" },
+  { id: 35, name: "Salad Cá Ngừ", price: 39000, category: "Món ăn nhẹ" },
+  { id: 36, name: "Salad dầu giấm", price: 35000, category: "Món ăn nhẹ" },
+  { id: 37, name: "Bánh mì phô mai", price: 35000, category: "Món ăn nhẹ" },
+  { id: 38, name: "Bắp Phô Mai", price: 39000, category: "Món ăn nhẹ" },
 
   // --- Nước uống ---
   { id: 39, name: "Nước ngọt (ly)", price: 9000, category: "Nước" },
@@ -122,13 +122,12 @@
         div.className = "border rounded shadow-sm bg-white hover:shadow-md";
         div.innerHTML = `
           div.innerHTML = `
-            <img src="${item.image}" alt="${item.name}" class="w-full h-32 object-cover rounded-t">
             <div class="p-3">
               <h3 class="font-semibold text-lg">${item.name}</h3>
               <p class="text-green-600 font-medium">${formatPrice(item.price)}</p>
               <button data-id="${item.id}" class="add-to-cart mt-2 w-full py-2 bg-green-600 text-white rounded hover:bg-green-700">Thêm vào giỏ</button>
             </div>
-`          ;
+          `;
         container.appendChild(div);
       });
 
