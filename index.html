@@ -120,7 +120,7 @@
         div.className = "border rounded shadow-sm bg-white hover:shadow-md";
         div.innerHTML = `
           <div class="p-3">
-            <h3 class="font-semibold text-lg">${item.name}</h3>
+            <h3 class="font-bold text-lg">${item.name}</h3>
             <p class="text-green-600 font-medium">${formatPrice(item.price)}</p>
             <button data-id="${item.id}" class="add-to-cart mt-2 w-full py-2 bg-green-600 text-white rounded hover:bg-green-700">Thêm vào giỏ</button>
           </div>
@@ -218,7 +218,7 @@
   .then(data => {
     console.log("Kết quả từ Telegram:", data);
     if (data.ok) {
-      alert("#Teampizzatime cảm ơn!");
+      alert("Tụi mình sẽ gọi lại xác nhận đơn trong vài phút nhé!");
     } else {
       alert("❌ Gửi không thành công: " + data.description);
     }
@@ -268,10 +268,10 @@
     let message = `🛒 ĐƠN HÀNG MỚI\n👤 Khách: ${name}\n📞 SĐT: ${phone}\n🏠 Địa chỉ: ${address}\n📝 Ghi chú: ${note || "Không có"}\n\n📦 Món đặt:\n`;
     let total = 0;
     cart.forEach(item => {
-      message += `🍕 ${item.name} x${item.quantity} = ${item.price * item.quantity}/1000k\n`;
+      message += `🍕 ${item.name} x${item.quantity} = ${item.price * item.quantity/1000}k\n`;
       total += item.price * item.quantity;
     });
-    message += `\n💰 Tổng cộng: ${total}/1000k`;
+    message += `\n💰 Tổng cộng: ${total/1000}k`;
 
     // Gửi về Telegram
     sendTelegramMessage(message);
